@@ -115,6 +115,15 @@ public class UsuariosService {
 	    return "Usuário desativado com sucesso!";
 	}
 	
+	public String reativar(long id) {
+	    Optional<Usuarios> usuario = usuariosRepository.findById(id);
+	    if (!usuario.isPresent()) {
+	        throw new RuntimeException("Usuário não encontrado");
+	    }
+	    usuariosRepository.reativarUsuario(id);
+	    return "Usuário reativado com sucesso!";
+	}
+	
 	
 	public Usuarios findByCpf(String cpf) {
 		return this.usuariosRepository.findByCpf(cpf);

@@ -34,7 +34,7 @@ import app.service.EmprestimosService;
 @SpringBootTest
 public class EmprestimoControllerTest {
 
-	/*@Autowired
+	@Autowired
 	EmprestimosController emprestimoController;
 
 	@MockBean
@@ -58,14 +58,12 @@ public class EmprestimoControllerTest {
 			LocalDateTime dataRetirada = LocalDateTime.now();
 			LocalDateTime dataDevolucao = dataRetirada.plusHours(2);
 
-			Alunos aluno = new Alunos(1, "Beatriz Schindler", dataNascimento, "115.822.819-80",
-					"biaschindler@gmail.com", "(45) 99999-9999", "bea-schin", "123", "505233", "Engenharia de Software",
-					true, null);
+			Alunos aluno = new Alunos("Beatriz", "741256", "Engenharia", true, "115.822.819-80");
 
 			Equipamentos equipamento = new Equipamentos(1, "123456", "Dell", "AX05", dtAquisicao, "OK", "Disponível",
 					true, null);
 
-			Usuarios usuario = new Usuarios(1, "João Girardi", "008.398.349-00", "joao-girardi", "123", true, null);
+			Usuarios usuario = new Usuarios("Gabriela", "Colaborador", "282.249.270-08", "gabi", "$2a$12$A0t.YpdGg/3lbIQMWv1xi.9PZIfNYia0XgSymx/Au45k8U16kailm", false);
 
 			emprestimo = new Emprestimos(1, dataRetirada, null, "Em Andamento", "", aluno, equipamento, usuario);
 			emprestimoAtualizado = new Emprestimos(1, dataRetirada, dataDevolucao, "Encerrado", "", aluno, equipamento,
@@ -307,6 +305,5 @@ public class EmprestimoControllerTest {
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	    assertEquals(null, response.getBody());
 	}
-*/
 
 }

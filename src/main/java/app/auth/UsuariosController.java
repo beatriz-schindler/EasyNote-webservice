@@ -124,5 +124,18 @@ public class UsuariosController {
 		}
 	}
 	
+	@PutMapping("/reativar")
+	@PreAuthorize("HasRole('Admin')")
+	public ResponseEntity<String> reativar(@RequestParam long id){
+		try {
+			String mensagem = this.usuarioService.reativar(id);
+			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST );
+		}
+	}
+	
 }
 

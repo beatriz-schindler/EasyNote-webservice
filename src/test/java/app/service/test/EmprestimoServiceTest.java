@@ -32,7 +32,7 @@ import app.service.EmprestimosService;
 @SpringBootTest
 public class EmprestimoServiceTest {
 
-	/*@Autowired
+	@Autowired
 	EmprestimosService emprestimoService;
 
 	@MockBean
@@ -61,16 +61,14 @@ public class EmprestimoServiceTest {
 			LocalDateTime dataDevolucao = dataRetirada.plusHours(2);
 
 			// Criando a instância de Alunos
-			Alunos aluno = new Alunos(1, "Beatriz Schindler", dataNascimento, "115.822.819-80",
-					"biaschindler@gmail.com", "(45) 99999-9999", "bea-schin", "123", "505233", "Engenharia de Software",
-					true, null);
+			Alunos aluno = new Alunos("Beatriz", "741256", "Engenharia", true, "115.822.819-80");
 
 			// Criando a instância de Equipamentos
 			Equipamentos equipamento = new Equipamentos(1, "123456", "Dell", "AX05", dtAquisicao, "OK", "Disponível",
 					true, null);
 
 			// Criando a instância de Usuarios
-			Usuarios usuario = new Usuarios(1, "João Girardi", "008.398.349-00", "joao-girardi", "123", true, null);
+			Usuarios usuario = new Usuarios("Gabriela", "Colaborador", "282.249.270-08", "gabi", "$2a$12$A0t.YpdGg/3lbIQMWv1xi.9PZIfNYia0XgSymx/Au45k8U16kailm", false);
 
 			// Criando as instâncias de Emprestimos
 			emprestimo = new Emprestimos(1, dataRetirada, null, "Em Andamento", "", aluno, equipamento, usuario);
@@ -149,19 +147,6 @@ public class EmprestimoServiceTest {
 		});
 	}
 
-	@Test
-	@DisplayName("Equipamento já possui empréstimo em andamento")
-	void salvarEmprestimoEquipamentoComEmprestimoAtivo() {
-		List<Emprestimos> emprestimosAtivos = List.of(emprestimo);
-
-		//Mockito.when(emprestimoRepository.findByEmprestimosByEquipamentoAtivo(Mockito.any(Equipamentos.class)))
-				//.thenReturn(emprestimosAtivos);
-
-		assertThrows(RuntimeException.class, () -> {
-			emprestimoService.save(emprestimo);
-		});
-
-	}
 
 	@Test
 	@DisplayName("Update com Sucesso")
@@ -269,73 +254,5 @@ public class EmprestimoServiceTest {
 		assertEquals("Empréstimo encerrado com sucesso", retorno);
 	}
 
-	@Test
-	@DisplayName("TESTE UNITÁRIO - TEMPO DE USO")
-	void tempoDeUso() {
-		// Simular o objeto 'emprestimoAtualizado'
-		Emprestimos emprestimoAtualizado = new Emprestimos();
 
-		// Definir data de retirada e devolução para teste
-		LocalDateTime dataRetirada = LocalDateTime.of(2024, 9, 20, 10, 0); // 20 de Setembro, 10h00
-		LocalDateTime dataDevolucao = LocalDateTime.of(2024, 9, 22, 15, 30); // 22 de Setembro, 15h30
-
-		emprestimoAtualizado.setDataRetirada(dataRetirada);
-		emprestimoAtualizado.setDataDevolucao(dataDevolucao);
-
-		// Chamar o método a ser testado
-		String mensagem = emprestimoService.tempodeUso(emprestimoAtualizado);
-
-		// Verificar o resultado esperado
-		String resultadoEsperado = "2 dias, 5 horas, 30 minutos"; // Tempo esperado entre as duas datas
-		assertEquals(resultadoEsperado, mensagem);
-	}
-
-	@Test
-	@DisplayName("TESTE UNITÁRIO - TEMPO DE USO COM DEVOLUÇÃO NULA")
-	void tempodeUso_DeveRetornarMensagemDeErro_QuandoDataDevolucaoNula() {
-		// Cria um objeto Emprestimos com data de retirada válida e data de devolução
-		// nula
-		Emprestimos emprestimo = new Emprestimos();
-		LocalDateTime dataRetirada = LocalDateTime.of(2023, 9, 21, 10, 0);
-		emprestimo.setDataRetirada(dataRetirada);
-		emprestimo.setDataDevolucao(null);
-
-		// Executa o método
-		String resultado = emprestimoService.tempodeUso(emprestimo);
-
-		// Verifica se o resultado está correto
-		assertEquals("Datas inválidas", resultado);
-	}
-
-	@Test
-	@DisplayName("TESTE UNITÁRIO - TEMPO DE USO COM RETIRADA NULA")
-	void tempodeUso_DeveRetornarMensagemDeErro_QuandoDataRetiradaNula() {
-		// Cria um objeto Emprestimos com data de retirada nula e data de devolução
-		// válida
-		Emprestimos emprestimo = new Emprestimos();
-		LocalDateTime dataDevolucao = LocalDateTime.of(2023, 9, 23, 12, 30);
-		emprestimo.setDataRetirada(null);
-		emprestimo.setDataDevolucao(dataDevolucao);
-
-		// Executa o método
-		String resultado = emprestimoService.tempodeUso(emprestimo);
-
-		// Verifica se o resultado está correto
-		assertEquals("Datas inválidas", resultado);
-	}
-
-	@Test
-	@DisplayName("TESTE UNITÁRIO - TEMPO DE USO COM AMBAS DATAS NULAS")
-	void tempodeUso_DeveRetornarMensagemDeErro_QuandoAmbasDatasForemNulas() {
-		// Cria um objeto Emprestimos com ambas as datas nulas
-		Emprestimos emprestimo = new Emprestimos();
-		emprestimo.setDataRetirada(null);
-		emprestimo.setDataDevolucao(null);
-
-		// Executa o método
-		String resultado = emprestimoService.tempodeUso(emprestimo);
-
-		// Verifica se o resultado está correto
-		assertEquals("Datas inválidas", resultado);
-	}*/
 }
