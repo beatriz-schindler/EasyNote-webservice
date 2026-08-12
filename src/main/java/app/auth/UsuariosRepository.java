@@ -25,6 +25,11 @@ public interface UsuariosRepository extends JpaRepository<Usuarios, Long>{
 	@Query("UPDATE Usuarios u SET u.ativo = false WHERE u.id = :id")
 	public void desativarUsuarios(long id);
 	
+	@Modifying
+	@Transactional
+	@Query("UPDATE Usuarios u SET u.ativo = true WHERE u.id = :id")
+	public void reativarUsuario(long id);
+	
 	/*@Query("SELECT u.id, u.createdBy, u.createdDate, u.lastModifiedBy, u.lastModifiedDate FROM Usuarios u")
 	List<Object[]> findAuditoriaUsuarios();*/
 	
