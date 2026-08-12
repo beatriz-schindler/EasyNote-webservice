@@ -37,6 +37,16 @@ public class Alunos extends Auditable{
 	@NotBlank(message="Por favor, informe o nome do aluno")
 	private String nome;
 	
+	public Alunos(@NotBlank(message = "Por favor, informe o nome do aluno") String nome,
+			@NotBlank(message = "Por favor, informe o RA do aluno") String ra,
+			@NotBlank(message = "Por favor, informe o curso do aluno") String curso, boolean ativo, String cpf) {
+		this.nome = nome;
+		this.ra = ra;
+		this.curso = curso;
+		this.ativo = ativo;
+		this.cpf = cpf;
+	}
+	
 	@NotBlank(message="Por favor, informe o RA do aluno")
 	private String ra;
 	
