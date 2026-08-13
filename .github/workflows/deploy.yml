@@ -1,0 +1,41 @@
+name: Deploy Backend AWS
+
+on:
+  push:
+    branches: [main, master, remove-tests-from-build]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
+      - name: Build project
+        run: mvn clean install -DskipTests
+        
+      - name: Login DockerHub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      
+      - name: Build Docker Image
+        run: docker build -t beatrizschindler/easynote_backend_image .
+       
+      - name: Push image docker
+        run: docker push beatrizschindler/easynote_backend_image    
+        
+  deploy:
+     needs: build
+     runs-on: self-hosted
+     steps:
+      - name: Pull image from docker hub
+        run: docker pull beatrizschindler/easynote_backend_image:latest
+      - name: Remove docker container
+        run: docker rm -f easynote_backend
+      - name: Run docker container
+        run: docker run -d -p 8082:8082 --restart unless-stopped --name easynote_backend beatrizschindler/easynote_backend_image 
